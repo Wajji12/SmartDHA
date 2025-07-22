@@ -1,8 +1,12 @@
 ﻿using System.Data;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using Azure.Core;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
 using DHAFacilitationAPIs.Application.Feature.Auth.Queries.ResendOTP;
+using DHAFacilitationAPIs.Application.Feature.GuestRoomsBooking.Clubs.Commands.AddBooking;
+using DHAFacilitationAPIs.Application.Feature.GuestRoomsBooking.Clubs.Commands.CancelBooking;
 using DHAFacilitationAPIs.Application.Feature.GuestRoomsBooking.Clubs.Queries.GetAllClubs;
 using DHAFacilitationAPIs.Application.Feature.GuestRoomsBooking.Clubs.Queries.SearchRoom;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +27,6 @@ public class GuestRoomsBookingController : BaseApiController
         _smsService = smsService;
     }
 
-    [AllowAnonymous]
     [HttpGet("GetAllClubs/{user_id}")]
     public async Task<IActionResult> GetAllClubsAsync(int user_id, CancellationToken cancellationToken)
     {
@@ -32,7 +35,6 @@ public class GuestRoomsBookingController : BaseApiController
         return Ok(result);
     }
 
-    [AllowAnonymous]
     [HttpPost("SearchRoom")]
     public async Task<IActionResult> SearchRoom(SearchRoomQuery query,CancellationToken cancellationToken)
     {
@@ -45,5 +47,18 @@ public class GuestRoomsBookingController : BaseApiController
 
     }
 
+    [HttpPost("AddBooking")]
+    public async Task<IActionResult> AddBooking(AddBookingCommand request, CancellationToken cancellationToken)
+    {
+        return Ok(await Mediator.Send(request, cancellationToken));
+    }
+
+
+    [HttpPost]
+    [Route("CancelBooking")]
+    public async Task<IActionResult> CancelBooking(CancelBookingCommand request, CancellationToken cancellationToken)
+    {
+        return Ok(await Mediator.Send(request, cancellationToken));
+    }
 
 }

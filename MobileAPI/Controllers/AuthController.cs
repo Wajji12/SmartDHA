@@ -51,14 +51,14 @@ public class AuthController : BaseApiController
         if (isSuccessful)
         {
             
+                //return Ok(result);
+            var message = $"Your code is {user.Otp}.";
+            var smsResponse = await _smsService.SendSmsAsync(user.MobileNo, message);
+
+            if (!smsResponse.Contains("ERROR", StringComparison.OrdinalIgnoreCase))
                 return Ok(result);
-                //var message = $"Your code is {user.Otp}.";
-                //var smsResponse = await _smsService.SendSmsAsync(user.MobileNo, message);
 
-                //if (!smsResponse.Contains("ERROR", StringComparison.OrdinalIgnoreCase))
-                //    return Ok(result);
-
-                //return BadRequest(new { cnic = request.Cnic, msg = "Error sending OTP. Please contact support." });
+            return BadRequest(new { cnic = request.Cnic, msg = "Error sending OTP. Please contact support." });
         }
 
         return Unauthorized(result);
@@ -137,13 +137,14 @@ public class AuthController : BaseApiController
 
     }
 
-    
+    [AllowAnonymous]
     [HttpPost("SetPassword")]
     public async Task<IActionResult> SetPassword(SetPasswordCommand request)
     {
         return Ok(await Mediator.Send(request));
     }
 
+    [AllowAnonymous]
     [HttpPost("ResendOTP")]
     public async Task<IActionResult> ResendOTP(ResendOTPQuery request)
     {
