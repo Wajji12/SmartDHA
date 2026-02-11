@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Feature\UserFamily\Commands\AddUserFamilyCommands\" />
     <Folder Include="Feature\User\Commands\ForgetPassword\" />
     <Folder Include="Feature\User\Commands\RegisterUser\" />
   </ItemGroup>

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
 using DHAFacilitationAPIs.Application.Feature.UserFamily.Commands.AddUserFamilyCommandHandler;
-using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.AddUserFamilyCommands;
 using DHAFacilitationAPIs.Domain.Entities;
 using DHAFacilitationAPIs.Domain.Enums;
 using MediatR;
