@@ -6,6 +6,8 @@ namespace DHAFacilitationAPIs.Domain.Common;
 public abstract class BaseEntity
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public bool IsActive { get; set; } = true;
+    public bool IsDeleted { get; set; } = false;
 
 }

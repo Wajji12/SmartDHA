@@ -10,6 +10,6 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
 
 public class DeleteUserFamilyCommand : IRequest<bool>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
 namespace DHAFacilitationAPIs.Domain.Entities;
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : BaseAuditableEntity
 {
     public string FullName { get; set; } = default!;
     public string EmailAddress { get; set; } = default!;
@@ -16,9 +16,7 @@ public class ApplicationUser : IdentityUser
     public string? FrontSideCNIC { get; set; }
     public string? BackSideCNIC { get; set; }
     public string CNIC { get; set; } = default!;
-    public bool IsActive { get; set; } = true;
-    public bool IsDeleted { get; set; } = false;
+
 
     public ICollection<UserFamily> UserFamilies { get; set; } = new List<UserFamily>();
-
 }

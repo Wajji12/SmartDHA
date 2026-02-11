@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DHAFacilitationAPIs.Application.Common.Interfaces;
+using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.DeleteUserFamilyCommand;
 
-namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.DeleteUserFamilyCommandHandler;
+namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands;
 
 public class DeleteUserFamilyCommandHandler
     : IRequestHandler<DeleteUserFamilyCommand, bool>
+
 {
     private readonly IApplicationDbContext _context;
 

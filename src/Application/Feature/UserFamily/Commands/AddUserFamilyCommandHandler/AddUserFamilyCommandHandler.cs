@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
 using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.AddUserFamilyCommands;
+using DHAFacilitationAPIs.Domain.Entities;
+using DHAFacilitationAPIs.Domain.Enums;
 
 namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.AddUserFamilyCommandHandler;
 
-public class AddUserFamilyCommandHandler
-    : IRequestHandler<AddUserFamilyCommand, int>
+public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
 
@@ -18,17 +17,17 @@ public class AddUserFamilyCommandHandler
         _context = context;
     }
 
-    public async Task<int> Handle(AddUserFamilyCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddUserFamilyCommand request, CancellationToken cancellationToken)
     {
-        var entity = new UserFamily
+        var entity = new DHAFacilitationAPIs.Domain.Entities.UserFamily
         {
-            UserId = request.UserId,
+            ApplicationUserId = request.UserId,
             Name = request.Name,
-            Relation = request.Relation,
-            Age = request.Age
+            Relation = (Relation)request.Relation,
+            DateOfBirth = request.DOB
         };
 
-        _context.UserFamilies.Add(entity);
+        await _context.UserFamilies.AddAsync(entity, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
         return entity.Id;

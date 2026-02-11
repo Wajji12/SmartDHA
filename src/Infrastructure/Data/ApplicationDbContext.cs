@@ -13,9 +13,9 @@ public class ApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
-    public DbSet<UserFamily> Residents => Set<UserFamily>();
-    public DbSet<Vehicle> Vehicles => Set<Vehicle>();
-
+    public DbSet<UserFamily> UserFamilies { get; set; }
+    public DbSet<Vehicle> Vehicles { get; set; }
+    public DbSet<Property> Properties { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -24,9 +24,9 @@ public class ApplicationDbContext
         IdentityBuilder(builder);
 
         builder.Entity<UserFamily>()
-            .HasOne(x => x.User)
+            .HasOne(x => x.ApplicationUser)
             .WithMany(x => x.UserFamilies)
-            .HasForeignKey(x => x.UserId);
+            .HasForeignKey(x => x.ApplicationUserId);
 
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
@@ -43,7 +43,7 @@ public class ApplicationDbContext
                   .HasMaxLength(150)
                   .IsRequired();
 
-            entity.Property(r => r.RfidTag)
+            entity.Property(r => r.ResidentCardNumber)
                   .HasMaxLength(200)
                   .IsRequired();
 
@@ -109,14 +109,14 @@ public class ApplicationDbContext
                   .HasMaxLength(100)
                   .IsRequired();
 
-            entity.Property(e => e.Email)
+            entity.Property(e => e.EmailAddress)
                   .HasMaxLength(100);
 
             entity.Property(e => e.Password)
-                  .HasMaxLength(500); // allow hashed passwords
+                  .HasMaxLength(500);
 
             entity.Property(e => e.Category)
-                  .HasConversion<int>();
+                    .HasConversion<int>();
 
             entity.Property(e => e.Property)
                   .HasConversion<int>();

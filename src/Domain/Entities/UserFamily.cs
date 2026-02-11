@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 namespace DHAFacilitationAPIs.Domain.Entities;
 public class UserFamily : BaseAuditableEntity
 {
-    public string Name { get; set; } = null!;
-    public string? RfidTag { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
+    public string? ResidentCardNumber { get; set; } = string.Empty;
     public string? ImageUrl { get; set; }
     public string? Cnic { get; set; }
     public string? PhoneNumber { get; set; }
     public string? FatherName { get; set; }
     public Relation Relation { get; set; }
     public DateTime DateOfBirth { get; set; }
+
+    public Guid ApplicationUserId { get; set; }   // foreign key
+    public ApplicationUser ApplicationUser { get; set; } = null!;  // navigation property
 }

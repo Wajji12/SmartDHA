@@ -8,8 +8,8 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
 
 public class AddUserFamilyCommand : IRequest<int>
 {
-    public int UserId { get; set; }
-    public string? Name { get; set; }
-    public string? Relation { get; set; }
-    public int Age { get; set; }
+    public Guid UserId { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int Relation { get; set; }
+    public DateTime DOB { get; set; }
 }

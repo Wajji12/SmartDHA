@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.UpdateUserFamilyCommandHandler;
+using DHAFacilitationAPIs.Domain.Enums;
 
 namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.UpdateUserFamilyCommandHandler
 {
@@ -26,10 +27,10 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
             if (entity == null)
                 return false;
 
-            entity.UserId = request.UserId;
+            entity.ApplicationUserId = request.UserId;
             entity.Name = request.Name;
-            entity.Relation = request.Relation;
-            entity.Age = request.Age;
+            entity.Relation = (Relation)request.Relation;
+            entity.DateOfBirth = request.DOB;
 
             await _context.SaveChangesAsync(cancellationToken);
 
