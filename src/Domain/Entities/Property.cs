@@ -9,23 +9,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DHAFacilitationAPIs.Domain.Entities;
 
-public class Property
+public class Property : BaseAuditableEntity
 {
-    public int Id { get; set; }
-    public string? Category { get; set; }
-    public string? Type { get; set; }
-    public string? Phase { get; set; }
-    public string? Zone { get; set; }
+    public CategoryType? Category { get; set; }
+    public PropertyType? Type { get; set; }
+    public Phase? Phase { get; set; }
+    public Zone? Zone { get; set; }
     public string? Khayaban { get; set; }
-    public string? Floor { get; set; }
-    public string? StreetType { get; set; }
-    public string? StreetNO { get; set; }
-    public string? PlotNO { get; set; }
+    public int? Floor { get; set; }
+    public string? StreetNo { get; set; }
+    public string? PlotNo { get; set; }
     public PossessionType PossessionType { get; set; }
 
     public string? ProofOfPossessionImage { get; set; }
     public string? UtilityBillAttachment { get; set; }
-
-    public bool IsActive { get; set; } = true;
-    public DateTime CreatedOnUTC { get; set; } = DateTime.UtcNow;
 }
