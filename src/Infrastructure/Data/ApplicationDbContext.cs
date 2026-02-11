@@ -22,6 +22,7 @@ public class ApplicationDbContext
         base.OnModelCreating(builder);
 
         IdentityBuilder(builder);
+        ConfigureResidentVehicle(builder);
 
         builder.Entity<UserFamily>()
             .HasOne(x => x.ApplicationUser)
@@ -264,7 +265,7 @@ public class ApplicationDbContext
         builder.Entity<IdentityRole>(entity =>
         {
             entity.ToTable("Role");
-            entity.Property(e => e.Id).HasMaxLength(85);
+            entity.Property(e => e.Id).HasMaxLength(450);
             entity.Property(e => e.NormalizedName).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.ConcurrencyStamp).HasMaxLength(85);
@@ -273,23 +274,8 @@ public class ApplicationDbContext
         builder.Entity<IdentityUserRole<string>>(entity =>
         {
             entity.ToTable("UserRoles");
-            entity.Property(e => e.UserId).HasMaxLength(85);
-            entity.Property(e => e.RoleId).HasMaxLength(85);
-        });
-
-        builder.Entity<IdentityUserClaim<string>>(entity =>
-        {
-            entity.ToTable("UserClaims");
-            entity.Property(e => e.Id).HasMaxLength(85);
-            entity.Property(e => e.UserId).HasMaxLength(85);
-        });
-
-        builder.Entity<IdentityUserLogin<string>>(entity =>
-        {
-            entity.ToTable("UserLogins");
-            entity.Property(e => e.LoginProvider).HasMaxLength(85);
-            entity.Property(e => e.ProviderKey).HasMaxLength(85);
-            entity.Property(e => e.UserId).HasMaxLength(85);
+            entity.Property(e => e.UserId).HasMaxLength(450);
+            entity.Property(e => e.RoleId).HasMaxLength(450);
         });
 
         builder.Entity<IdentityUserToken<string>>(entity =>
@@ -297,14 +283,14 @@ public class ApplicationDbContext
             entity.ToTable("UserTokens")
                   .HasKey(e => new { e.UserId, e.LoginProvider });
 
-            entity.Property(e => e.UserId).HasMaxLength(85);
+            entity.Property(e => e.UserId).HasMaxLength(450);
         });
 
         builder.Entity<IdentityRoleClaim<string>>(entity =>
         {
             entity.ToTable("RoleClaims");
-            entity.Property(e => e.Id).HasMaxLength(85);
-            entity.Property(e => e.RoleId).HasMaxLength(85);
+            entity.Property(e => e.Id).HasMaxLength(450);
+            entity.Property(e => e.RoleId).HasMaxLength(450);
 
 
         });

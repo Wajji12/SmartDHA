@@ -13,7 +13,7 @@ public class AddUserFamilyCommand : IRequest<AddUserFamilyResponse>
     public int Relation { get; set; }
     public DateTime DOB { get; set; }
     public string CNIC { get; set; } = string.Empty;
-    public string FatherName { get; set; } = string.Empty;
-    public string Image { get; set; } = string.Empty;
+    public string FatherHusbandName { get; set; } = string.Empty;
+    public string ProfilePicture { get; set; } = string.Empty;
     public string PhoneNo { get; set; } = string.Empty;
 }

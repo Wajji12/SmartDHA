@@ -31,7 +31,7 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.Queries.AllUserFami
                     Phone = x.PhoneNumber!,
                     Relation = (int)x.Relation,
                     CNIC = x.Cnic!,
-                    Image = x.ImageUrl!,
+                    Image = x.ProfilePicture!,
                     ResidentCardNumber = x.ResidentCardNumber!
                 })
                 .ToListAsync(cancellationToken);

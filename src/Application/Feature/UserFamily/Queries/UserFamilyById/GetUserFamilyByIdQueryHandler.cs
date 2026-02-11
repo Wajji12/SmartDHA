@@ -33,7 +33,7 @@ public class GetUserFamilyByIdQueryHandler: IRequestHandler<GetUserFamilyByIdQue
             Phone = userData.PhoneNumber!,
             Relation = (int)userData.Relation,
             CNIC = userData.Cnic!,
-            Image = userData.ImageUrl!,
+            Image = userData.ProfilePicture!,
             ResidentCardNumber = userData.ResidentCardNumber!   
         };
 
