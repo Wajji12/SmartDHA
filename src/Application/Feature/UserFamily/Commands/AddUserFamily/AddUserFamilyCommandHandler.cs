@@ -11,15 +11,18 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
 public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand, AddUserFamilyResponse>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IUser _currentUser;
 
-    public AddUserFamilyCommandHandler(IApplicationDbContext context)
+    public AddUserFamilyCommandHandler(IApplicationDbContext context, IUser currentUser)
     {
         _context = context;
+        _currentUser = currentUser;
     }
 
     public async Task<AddUserFamilyResponse> Handle(AddUserFamilyCommand request, CancellationToken cancellationToken)
     {
         var response = new AddUserFamilyResponse();
+        
         var entity = new DHAFacilitationAPIs.Domain.Entities.UserFamily
         {
             Name = request.Name,
@@ -29,10 +32,19 @@ public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand,
             FatherHusbandName = request.FatherHusbandName,
             ProfilePicture = request.ProfilePicture,
             PhoneNumber = request.PhoneNo,
+            ApplicationUserId = Guid.Parse(request.ApplicationUserId)
         };
 
-        await _context.UserFamilies.AddAsync(entity, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.UserFamilies.AddAsync(entity);
+        try
+        {
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
 
         response.Success = true;
         response.Message = "Family member added successfully.";
