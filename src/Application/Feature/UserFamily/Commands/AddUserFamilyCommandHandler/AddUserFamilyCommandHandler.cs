@@ -1,14 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
+using DHAFacilitationAPIs.Application.Feature.UserFamily.Commands.AddUserFamilyCommandHandler;
 using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.AddUserFamilyCommands;
 using DHAFacilitationAPIs.Domain.Entities;
 using DHAFacilitationAPIs.Domain.Enums;
+using MediatR;
 
 namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.AddUserFamilyCommandHandler;
 
-public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand, Guid>
+public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand, AddUserFamilyResponse>
 {
     private readonly IApplicationDbContext _context;
 
@@ -17,19 +18,26 @@ public class AddUserFamilyCommandHandler : IRequestHandler<AddUserFamilyCommand,
         _context = context;
     }
 
-    public async Task<Guid> Handle(AddUserFamilyCommand request, CancellationToken cancellationToken)
+    public async Task<AddUserFamilyResponse> Handle(AddUserFamilyCommand request, CancellationToken cancellationToken)
     {
+        var response = new AddUserFamilyResponse();
         var entity = new DHAFacilitationAPIs.Domain.Entities.UserFamily
         {
-            ApplicationUserId = request.UserId,
             Name = request.Name,
             Relation = (Relation)request.Relation,
-            DateOfBirth = request.DOB
+            DateOfBirth = request.DOB,
+            Cnic = request.CNIC,
+            FatherName = request.FatherName,
+            ImageUrl = request.Image,
+            PhoneNumber = request.PhoneNo,
         };
 
         await _context.UserFamilies.AddAsync(entity, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        response.Success = true;
+        response.Message = "Family member added successfully.";
+        response.Id = entity.Id;
+        return response;
     }
 }
