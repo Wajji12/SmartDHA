@@ -4,7 +4,7 @@ using MediatR;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
 using DHAFacilitationAPIs.Domain.Entities;
 
-namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.DeleteUserFamily
+namespace DHAFacilitationAPIs.Application.Feature.UserFamily.Commands.DeleteUserFamilyCommand
 {
     public class DeleteUserFamilyCommand : IRequest<bool>
     {
