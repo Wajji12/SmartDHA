@@ -1,16 +1,17 @@
-﻿using MediatR;
-using DHAFacilitationAPIs.Application.Common.Interfaces;
-using DHAFacilitationAPIs.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using DHAFacilitationAPIs.Application.Common.Interfaces;
+using DHAFacilitationAPIs.Application.Feature.UserFamily.Commands.UpdateUserFamilyCommandHandler;
 using DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.UpdateUserFamilyCommandHandler;
+using DHAFacilitationAPIs.Domain.Entities;
 using DHAFacilitationAPIs.Domain.Enums;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.UpdateUserFamilyCommandHandler
 {
     public class UpdateUserFamilyCommandHandler
-        : IRequestHandler<UpdateUserFamilyCommand, bool>
+        : IRequestHandler<UpdateUserFamilyCommand, UpdateUserFamilyResponse>
     {
         private readonly IApplicationDbContext _context;
 
@@ -19,13 +20,14 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
             _context = context;
         }
 
-        public async Task<bool> Handle(UpdateUserFamilyCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateUserFamilyResponse> Handle(UpdateUserFamilyCommand request, CancellationToken cancellationToken)
         {
+            var response = new UpdateUserFamilyResponse();
             var entity = await _context.UserFamilies
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (entity == null)
-                return false;
+                throw new Exception("No Record Found!");
 
             entity.ApplicationUserId = request.UserId;
             entity.Name = request.Name;
@@ -34,7 +36,9 @@ namespace DHAFacilitationAPIs.Application.Feature.UserFamily.UserFamilyCommands.
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return true;
+            response.Message = "User family updated successfully.";
+            response.Success = true;
+            return response;
         }
     }
 }
