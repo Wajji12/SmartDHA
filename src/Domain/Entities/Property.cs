@@ -15,10 +15,11 @@ public class Property : BaseAuditableEntity
     public PropertyType? Type { get; set; }
     public Phase? Phase { get; set; }
     public Zone? Zone { get; set; }
-    public string? Khayaban { get; set; }
-    public int? Floor { get; set; }
-    public string? StreetNo { get; set; }
-    public string? PlotNo { get; set; }
+    public string Khayaban { get; set; } = string.Empty;
+    public int Floor { get; set; }
+    public string StreetNo { get; set; } = string.Empty;
+    public int PlotNo { get; set; }
+    public string Plot { get; set; } = string.Empty;
     public PossessionType PossessionType { get; set; }
 
     public string? ProofOfPossessionImage { get; set; }

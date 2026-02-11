@@ -53,21 +53,39 @@ public class ApplicationDbContext
             entity.Property(r => r.PhoneNumber)
                   .HasMaxLength(50);
 
-            entity.Property(r => r.FatherName)
+            entity.Property(r => r.FatherHusbandName)
                   .HasMaxLength(150);
 
             entity.Property(r => r.Relation)
                   .HasMaxLength(50);
 
+            entity.Property(v => v.ProfilePicture)
+            .HasColumnType("nvarchar(max)");
+
             entity.Property(r=>r.DateOfBirth)
             .HasColumnType("datetime2")
             .IsRequired();
 
+            entity.Property(p => p.Created)
+                              .HasColumnType("datetimeoffset")
+                              .HasDefaultValueSql("SYSDATETIMEOFFSET()");
 
-            //entity.HasMany(r => r.Vehicles)
-            //      .WithOne(v => v.UserFamily)
-            //      .HasForeignKey(v => v.UserFamilyId)
-            //      .OnDelete(DeleteBehavior.Cascade);
+            entity.Property(p => p.LastModified)
+                  .HasColumnType("datetimeoffset");
+
+            entity.Property(p => p.CreatedBy)
+                  .HasMaxLength(100);
+
+            entity.Property(p => p.LastModifiedBy)
+                  .HasMaxLength(100);
+
+            // ===== Soft delete flags =====
+
+            entity.Property(p => p.IsActive)
+                  .HasDefaultValue(true);
+
+            entity.Property(p => p.IsDeleted)
+                  .HasDefaultValue(false);
         });
 
         builder.Entity<Vehicle>(entity =>
@@ -80,7 +98,7 @@ public class ApplicationDbContext
                   .HasMaxLength(50)
                   .IsRequired();
 
-            entity.Property(v => v.ImageURL)
+            entity.Property(v => v.Attachment)
             .HasColumnType("nvarchar(max)");
 
             entity.Property(v => v.Year)
@@ -90,13 +108,104 @@ public class ApplicationDbContext
             entity.Property(v => v.Color)
                   .HasMaxLength(50)
                   .IsRequired();
+            entity.Property(p => p.Created)
+                  .HasColumnType("datetimeoffset")
+                  .HasDefaultValueSql("SYSDATETIMEOFFSET()");
 
-            //Foreign key relationship with UserFamily
-            //entity.HasOne(v => v.UserFamily)
-            //      .WithMany(f => f.Vehicles)   // assuming UserFamily has ICollection<Vehicle>
-            //      .HasForeignKey(v => v.UserFamilyId)
-            //      .OnDelete(DeleteBehavior.Cascade);
+            entity.Property(p => p.LastModified)
+                  .HasColumnType("datetimeoffset");
+
+            entity.Property(p => p.CreatedBy)
+                  .HasMaxLength(100);
+
+            entity.Property(p => p.LastModifiedBy)
+                  .HasMaxLength(100);
+
+            // ===== Soft delete flags =====
+
+            entity.Property(p => p.IsActive)
+                  .HasDefaultValue(true);
+
+            entity.Property(p => p.IsDeleted)
+                  .HasDefaultValue(false);
         });
+
+        builder.Entity<Property>(entity =>
+        {
+            entity.ToTable("Properties");
+
+            entity.HasKey(p => p.Id);
+
+            // ===== Enums (stored as int — recommended) =====
+
+            entity.Property(p => p.Category)
+                  .HasConversion<int>();
+
+            entity.Property(p => p.Type)
+                  .HasConversion<int>();
+
+            entity.Property(p => p.Phase)
+                  .HasConversion<int>();
+
+            entity.Property(p => p.Zone)
+                  .HasConversion<int>();
+
+            entity.Property(p => p.PossessionType)
+                  .HasConversion<int>()
+                  .IsRequired();
+
+            // ===== Strings =====
+
+            entity.Property(p => p.Khayaban)
+                  .HasMaxLength(150);
+
+            entity.Property(p => p.StreetNo)
+                  .HasMaxLength(50);
+
+            entity.Property(p => p.Plot)
+                  .HasMaxLength(50);
+
+            // ===== Numbers =====
+
+            entity.Property(p => p.Floor)
+                  .IsRequired();
+
+            entity.Property(p => p.PlotNo)
+                  .IsRequired();
+
+            // ===== Attachments (Base64 or long string) =====
+            // Use NVARCHAR(MAX)
+
+            entity.Property(p => p.ProofOfPossessionImage)
+                  .HasColumnType("nvarchar(max)");
+
+            entity.Property(p => p.UtilityBillAttachment)
+                  .HasColumnType("nvarchar(max)");
+
+            // ===== Auditing (from BaseAuditableEntity) =====
+
+            entity.Property(p => p.Created)
+                  .HasColumnType("datetimeoffset")
+                  .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+            entity.Property(p => p.LastModified)
+                  .HasColumnType("datetimeoffset");
+
+            entity.Property(p => p.CreatedBy)
+                  .HasMaxLength(100);
+
+            entity.Property(p => p.LastModifiedBy)
+                  .HasMaxLength(100);
+
+            // ===== Soft delete flags =====
+
+            entity.Property(p => p.IsActive)
+                  .HasDefaultValue(true);
+
+            entity.Property(p => p.IsDeleted)
+                  .HasDefaultValue(false);
+        });
+
 
     }
 
