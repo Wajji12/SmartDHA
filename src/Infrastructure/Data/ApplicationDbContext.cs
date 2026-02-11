@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using DHAFacilitationAPIs.Application.Common.Interfaces;
-using DHAFacilitationAPIs.Application.Common.Models;
+using DHAFacilitationAPIs.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +11,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-
+    public DbSet<UserFamily> UserFamilies { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
         IdentityBuilder(builder);
+
+        builder.Entity<UserFamily>()
+            .HasOne(x => x.User)
+            .WithMany(x => x.UserFamilies)
+            .HasForeignKey(x => x.UserId);
+
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
+
 
     private static void IdentityBuilder(ModelBuilder builder)
     {
@@ -75,7 +83,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
             entity.ToTable("RoleClaims");
             entity.Property(e => e.Id).HasMaxLength(85);
             entity.Property(e => e.RoleId).HasMaxLength(85);
+
+
         });
 
     }
+
 }

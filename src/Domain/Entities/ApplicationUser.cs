@@ -18,4 +18,7 @@ public class ApplicationUser : IdentityUser
     public string CNIC { get; set; } = default!;
     public bool IsActive { get; set; } = true;
     public bool IsDeleted { get; set; } = false;
+
+    public ICollection<UserFamily> UserFamilies { get; set; } = new List<UserFamily>();
+
 }
