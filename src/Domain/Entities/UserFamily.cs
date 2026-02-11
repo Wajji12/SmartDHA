@@ -5,16 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DHAFacilitationAPIs.Domain.Entities;
-
-public class UserFamily
+public class UserFamily : BaseAuditableEntity
 {
-    public int Id { get; set; }
-
-    public string? UserId { get; set; }
-
-    public string? Name { get; set; }
-    public string? Relation { get; set; }
-    public int Age { get; set; }
-
-    public ApplicationUser? User { get; set; }
+    public string Name { get; set; } = null!;
+    public string? RfidTag { get; set; } = null!;
+    public string? ImageUrl { get; set; }
+    public string? Cnic { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string? FatherName { get; set; }
+    public Relation Relation { get; set; }
+    public DateTime DateOfBirth { get; set; }
 }
