@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DHAFacilitationAPIs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260212060236_PhoneNumberInApplicationUser")]
+    [Migration("20260212061419_PhoneNumberInApplicationUser")]
     partial class PhoneNumberInApplicationUser
     {
         /// <inheritdoc />
@@ -330,7 +330,7 @@ namespace DHAFacilitationAPIs.Infrastructure.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("UserFamily", (string)null);
+                    b.ToTable("UserFamilies", (string)null);
                 });
 
             modelBuilder.Entity("DHAFacilitationAPIs.Domain.Entities.Vehicle", b =>

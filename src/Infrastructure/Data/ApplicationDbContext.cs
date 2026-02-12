@@ -36,7 +36,7 @@ public class ApplicationDbContext
     {
         builder.Entity<UserFamily>(entity =>
         {
-            entity.ToTable("UserFamily");
+            entity.ToTable("UserFamilies");
 
             entity.HasKey(r => r.Id);
 
