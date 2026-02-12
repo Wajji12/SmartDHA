@@ -222,6 +222,9 @@ public class ApplicationDbContext
             entity.Property(e => e.EmailAddress)
                   .HasMaxLength(100);
 
+            entity.Property(e => e.PhoneNumber)
+                  .HasMaxLength(12);
+
             entity.Property(e => e.Password)
                   .HasMaxLength(500);
 

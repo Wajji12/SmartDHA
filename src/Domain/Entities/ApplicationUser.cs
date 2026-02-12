@@ -16,6 +16,7 @@ public class ApplicationUser : BaseAuditableEntity
     public string? FrontSideCNIC { get; set; }
     public string? BackSideCNIC { get; set; }
     public string CNIC { get; set; } = default!;
+    public string? PhoneNumber { get; set; }
 
 
     public ICollection<UserFamily> UserFamilies { get; set; } = new List<UserFamily>();
